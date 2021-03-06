@@ -15,6 +15,10 @@ let db = new sqlite3.Database('./db.sqlite3', (err) => {
 });
 
 router.get('/login', async(req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
     res.setHeader('Content-type', 'application/json');
     /* Vérification du Basic auth */
     if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
