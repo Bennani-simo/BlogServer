@@ -6,6 +6,7 @@ const express = require('express'),
 
 const { verify_auth_token } = require('./helpers/jwt_helper')
 const authRoute = require('./routes/auth.route')
+const postsRoute = require('./routes/posts.route')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -20,6 +21,7 @@ app.get('/protected', verify_auth_token, async (req, res, next) => {
 })
 
 app.use('/auth', authRoute)
+app.use('/post', postsRoute)
 
 app.listen(port);
 console.log('|| API server started on : ' + port);
