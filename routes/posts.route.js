@@ -76,5 +76,25 @@ router.post('/addPost', async(req, res) => {
     }
 });
 
+router.post('/delete', async(req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+    res.setHeader('Content-type', 'application/json');
+    try{
+        /* Vérifier si le couple email/password est valide */
+        let sql = `DELETE FROM posts where id = ?`;
+        db.run(sql, [req.body.id], async (err, id) => {
+            if(err){
+                return res.status(400).json({ success : false, message: err });
+            } else {
+                return res.status(200).json({ success : true, id: id});
+            }
+        });
+    } catch (e) {
+        return res.status(500).json({ success : false, message: 'Internal server error' });
+    }
+});
 
 module.exports = router
